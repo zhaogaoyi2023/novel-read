@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: novel-read-server
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+      - ./keys:/app/keys
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/novels.db
+      - API_KEY=${API_KEY:-your-secret-api-key}
+      - AI_CODE_MODEL_ENDPOINT=${AI_CODE_MODEL_ENDPOINT:-https://api.openai.com/v1}
+      - AI_VISION_MODEL_ENDPOINT=${AI_VISION_MODEL_ENDPOINT:-https://api.openai.com/v1}
+    restart: unless-stopped
+    networks:
+      - novel-network
+
+  web:
+    build:
+      context: ./client/web
+      dockerfile: ../../Dockerfile.web
+    container_name: novel-read-web
+    ports:
+      - "3000:3000"
+    environment:
+      - SERVER_URL=http://server:8080
+    depends_on:
+      - server
+    restart: unless-stopped
+    networks:
+      - novel-network
+
+networks:
+  novel-network:
+    driver: bridge
+
+volumes:
+  data:
+  config:
+  keys:

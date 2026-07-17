@@ -1,0 +1,40 @@
+client:
+  theme: "dark"
+  font_size: 16
+  font_family: "default"
+  line_height: 1.8
+  auto_download: false
+  
+  # Reading settings
+  page_margin: 20
+  paragraph_indent: 2
+  text_align: "justify"
+  
+  # Display
+  show_progress: true
+  show_catalog: true
+  auto_next_chapter: false
+
+encryption:
+  enabled: true
+  algorithm: "AES-256-CBC"
+  key_file: "./keys/client.pem"
+
+server:
+  url: "http://localhost:8080"
+  timeout: 30
+  retry_count: 3
+  
+download:
+  default_format: "epub"
+  output_dir: "./downloads"
+  max_concurrent: 3
+  
+cache:
+  enabled: true
+  max_size_mb: 500
+  expire_hours: 24
+
+logging:
+  level: "INFO"
+  file: "./logs/client.log"

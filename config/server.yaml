@@ -1,0 +1,50 @@
+server:
+  host: "0.0.0.0"
+  port: 8080
+  database: "./data/novels.db"
+  debug: false
+  
+  # Security
+  api_key: "your-secret-api-key"
+  jwt_secret: "your-jwt-secret-key"
+  jwt_expire_hours: 24
+
+ai:
+  code_model:
+    endpoint: "https://api.openai.com/v1"
+    model: "gpt-4"
+    api_key: "${OPENAI_API_KEY}"
+    
+  vision_model:
+    endpoint: "https://api.openai.com/v1"
+    model: "gpt-4-vision-preview"
+    api_key: "${OPENAI_API_KEY}"
+
+channels:
+  official:
+    enabled: true
+    update_interval_hours: 6
+    
+  search:
+    enabled: true
+    engines:
+      - baidu
+      - bing
+      - so360
+      
+  opensource:
+    enabled: true
+    sources: []
+
+p2p:
+  enabled: true
+  torrent_port: 6881
+  download_dir: "./data/scripts"
+  public_key_file: "./keys/public.pem"
+  private_key_file: "./keys/private.pem"
+
+logging:
+  level: "INFO"
+  file: "./logs/server.log"
+  max_size_mb: 100
+  backup_count: 5
